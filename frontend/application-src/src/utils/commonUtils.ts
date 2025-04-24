@@ -21,9 +21,13 @@ export interface AddNewProgramForm {
   description: string | null;
 }
 
-
 // Defines the properties and types of the login form
 export interface LoginForm {
   email: string | null;
   password: string | null;
+}
+
+// Defines the properties and types of the create account form
+export interface CreateAccountForm extends LoginForm {
+  confirmPassword: string | null;
 }
