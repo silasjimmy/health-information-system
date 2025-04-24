@@ -1,7 +1,7 @@
 <template>
   <div class="actions-wrapper">
     <a-flex justify="flex-end">
-      <a-button type="primary">
+      <a-button type="primary" @click="openAddProgramFormModal = true">
         <PlusOutlined />
 
         <span>Add New Program</span>
@@ -40,6 +40,13 @@
       </template>
     </template>
   </a-table>
+
+  <add-program-form
+    :open="openAddProgramFormModal"
+    :loading="addProgramFormLoading"
+    @ok="saveNewProgram"
+    @cancel="closeAddProgramFormModal"
+  ></add-program-form>
 </template>
 
 <script setup lang="ts">
@@ -48,6 +55,8 @@ import {
   PlusOutlined,
   DeleteOutlined,
 } from "@ant-design/icons-vue";
+import { ref } from "vue";
+import AddProgramForm from "@/components/AddProgramForm.vue";
 
 const columns = [
   {
@@ -86,6 +95,26 @@ const data = [
     clients: 29,
   },
 ];
+
+const openAddProgramFormModal = ref<boolean>(false);
+const addProgramFormLoading = ref<boolean>(false);
+
+/**
+ * Saves the newly registered client in the database
+ * @param event
+ */
+function saveNewProgram(event: any) {
+  console.log(event);
+
+  openAddProgramFormModal.value = false;
+}
+
+/**
+ * Closes the form modal
+ */
+function closeAddProgramFormModal() {
+  openAddProgramFormModal.value = false;
+}
 </script>
 
 <style scoped>

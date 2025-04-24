@@ -8,7 +8,6 @@
     <div class="form-wrapper">
       <a-form
         ref="newClientForm"
-        name="basic"
         layout="vertical"
         autocomplete="off"
         :model="form"
@@ -130,7 +129,9 @@ function validateForm() {
   newClientForm.value
     .validate()
     .then(() => {
-      emits("ok", form);
+      const newClient = { ...form };
+
+      emits("ok", newClient);
 
       newClientForm.value.resetFields();
     })

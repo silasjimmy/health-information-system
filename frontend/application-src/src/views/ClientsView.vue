@@ -149,7 +149,7 @@ function searchClient(name: string) {
 }
 
 /**
- * Saves the newly registered client
+ * Saves the newly registered client in the database
  * @param event 
  */
 function saveNewClient(event: any) {
@@ -158,6 +158,9 @@ function saveNewClient(event: any) {
   openAddClientFormModal.value = false
 }
 
+/**
+ * Closes the form modal
+ */
 function closeAddClientFormModal() {
   openAddClientFormModal.value = false
 }

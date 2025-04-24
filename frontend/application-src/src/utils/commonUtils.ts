@@ -13,3 +13,10 @@ export interface AddNewClientForm {
   gender: Gender | null;
   programs: Array<number>;
 }
+
+// Defines the properties and types of the add program form
+export interface AddNewProgramForm {
+  label: string | null;
+  value: string | null;
+  description: string | null;
+}
