@@ -6,7 +6,9 @@ import { RouterView } from "vue-router";
   <!-- Customize the app theme -->
   <a-config-provider
     :theme="{
-      token: {},
+      token: {
+        fontFamily: 'Lexend',
+      },
     }"
   >
     <RouterView />

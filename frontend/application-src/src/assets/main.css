@@ -1,1 +1,7 @@
 /* @import './base.css'; */
+
+/* Override Ant Design default styles */
+
+h2 {
+  margin: 0 !important;
+}
