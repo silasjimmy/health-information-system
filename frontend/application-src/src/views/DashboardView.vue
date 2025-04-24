@@ -1,69 +1,69 @@
 <template>
-  <a-layout :style="layoutStyles">
-    <a-layout-sider :style="siderStyles">
-      <div class="logo-wrapper">
-        <img src="../assets/logo.png" alt="app logo" />
-      </div>
+  <a-layout-sider :style="siderStyles">
+    <div class="logo-wrapper">
+      <img src="../assets/logo.png" alt="app logo" />
+    </div>
 
-      <a-menu v-model:selectedKeys="selectedKeys">
-        <a-menu-item-group>
-          <template #title>
-            <span>Home</span>
-          </template>
+    <a-menu v-model:selectedKeys="selectedKeys">
+      <a-menu-item-group>
+        <template #title>
+          <span>Home</span>
+        </template>
 
-          <a-menu-item key="clients" @click="navigateTo('clients')">
-            <usergroup-add-outlined />
+        <a-menu-item key="clients" @click="navigateTo('clients')">
+          <usergroup-add-outlined />
 
-            <span>Clients</span>
-          </a-menu-item>
+          <span>Clients</span>
+        </a-menu-item>
 
-          <a-menu-item key="programs" @click="navigateTo('programs')">
-            <book-outlined />
+        <a-menu-item key="programs" @click="navigateTo('programs')">
+          <book-outlined />
 
-            <span>Programs</span>
-          </a-menu-item>
-        </a-menu-item-group>
+          <span>Programs</span>
+        </a-menu-item>
+      </a-menu-item-group>
 
-        <a-divider></a-divider>
+      <a-divider></a-divider>
 
-        <a-menu-item-group>
-          <template #title>
-            <span>Account</span>
-          </template>
+      <a-menu-item-group>
+        <template #title>
+          <span>Account</span>
+        </template>
 
-          <a-menu-item key="profile" @click="navigateTo('profile')">
-            <user-outlined />
+        <a-menu-item key="profile" @click="navigateTo('profile')">
+          <user-outlined />
 
-            <span>Profile</span>
-          </a-menu-item>
+          <span>Profile</span>
+        </a-menu-item>
 
-          <a-menu-item key="settings" @click="navigateTo('settings')">
-            <setting-outlined />
+        <a-menu-item key="settings" @click="navigateTo('settings')">
+          <setting-outlined />
 
-            <span>Settings</span>
-          </a-menu-item>
-        </a-menu-item-group>
-      </a-menu>
+          <span>Settings</span>
+        </a-menu-item>
+      </a-menu-item-group>
+    </a-menu>
 
-      <div class="action-wrapper">
-        <a-button block>
-          <logout-outlined />
-          <span>Logout</span>
-        </a-button>
-      </div>
-    </a-layout-sider>
+    <div class="action-wrapper">
+      <a-button block>
+        <logout-outlined />
+        <span>Logout</span>
+      </a-button>
+    </div>
+  </a-layout-sider>
 
-    <a-layout>
-      <a-layout-header :style="headerStyles">
-        <a-typography-title :level="2">{{ $route.meta.pageTitle }}</a-typography-title>
+  <a-layout>
+    <a-layout-header :style="headerStyles">
+      <a-typography-title :level="2">{{
+        $route.meta.pageTitle
+      }}</a-typography-title>
 
-        <a-avatar></a-avatar>
-      </a-layout-header>
+      <a-avatar></a-avatar>
+    </a-layout-header>
 
-      <a-layout-content :style="contentStyles">
-        <RouterView />
-      </a-layout-content>
-    </a-layout>
+    <a-layout-content :style="contentStyles">
+      <RouterView />
+    </a-layout-content>
   </a-layout>
 </template>
 
@@ -78,12 +78,6 @@ import {
   BookOutlined,
 } from "@ant-design/icons-vue";
 import router from "@/router";
-
-// Define a-layout override styles
-const layoutStyles: CSSProperties = {
-  backgroundColor: "#ffffff",
-  height: "100vh",
-};
 
 // Define a-layout-sider override styles
 const siderStyles: CSSProperties = {

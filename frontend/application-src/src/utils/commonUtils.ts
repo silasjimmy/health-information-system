@@ -20,3 +20,10 @@ export interface AddNewProgramForm {
   value: string | null;
   description: string | null;
 }
+
+
+// Defines the properties and types of the login form
+export interface LoginForm {
+  email: string | null;
+  password: string | null;
+}
