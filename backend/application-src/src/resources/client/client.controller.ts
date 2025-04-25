@@ -11,11 +11,18 @@ import { ClientService } from './client.service';
 import { CreateClientDto, UpdateClientDto } from './dto/client.dto';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ErrorResult, SuccessResult } from 'src/utils/common.util';
+import { ProgramService } from '../program/program.service';
+import { ClientProgramService } from '../client-program/client-program.service';
+import { Program } from '../program/entities/program.entity';
 
 @ApiTags('client')
 @Controller('clients')
 export class ClientController {
-  constructor(private readonly clientService: ClientService) {}
+  constructor(
+    private readonly clientService: ClientService,
+    private readonly programService: ProgramService,
+    private readonly clientProgramService: ClientProgramService,
+  ) {}
 
   @Post('client')
   @ApiBody({
@@ -41,7 +48,16 @@ export class ClientController {
        */
       if (payload.programIds) {
         for await (const id of payload.programIds) {
-          console.log(id);
+          const program: Program | null =
+            await this.programService.findOneById(id);
+
+          if (program)
+            // Assign the program to the client
+            this.clientProgramService.create({
+              clientId: res.id,
+              programId: program.id,
+            });
+          else continue;
         }
       }
 

@@ -27,7 +27,11 @@ export class ProgramService {
    * @returns A resolved promise containing an array of all programs in the database
    */
   findAll(): Promise<Program[]> {
-    return this.programRepository.find();
+    return this.programRepository.find({
+      relations: {
+        clients: true,
+      },
+    });
   }
 
   /**
@@ -37,7 +41,14 @@ export class ProgramService {
    * null if the program is not found
    */
   findOneById(id: number): Promise<Program | null> {
-    return this.programRepository.findOneBy({ id });
+    return this.programRepository.findOne({
+      where: {
+        id: id,
+      },
+      relations: {
+        clients: true,
+      },
+    });
   }
 
   /**
