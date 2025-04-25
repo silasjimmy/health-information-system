@@ -4,3 +4,9 @@ export enum UserRole {
   NURSE = 'nurse',
   ANONYMOUS = 'anonymous',
 }
+
+// Client gender types
+export enum Gender {
+  MALE = 'male',
+  FEMALE = 'female',
+}
