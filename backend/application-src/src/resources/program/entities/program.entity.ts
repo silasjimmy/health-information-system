@@ -12,7 +12,7 @@ export class Program {
   @Column()
   label: string;
 
-  @Column()
+  @Column({ unique: true })
   value: string;
 
   @Column()
