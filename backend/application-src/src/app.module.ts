@@ -4,10 +4,16 @@ import { UserModule } from './resources/user/user.module';
 import { ClientModule } from './resources/client/client.module';
 import { ProgramModule } from './resources/program/program.module';
 import { AuthModule } from './resources/auth/auth.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmConfigService } from './services/typeorm.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: TypeOrmConfigService,
+    }),
     UserModule,
     ClientModule,
     ProgramModule,
