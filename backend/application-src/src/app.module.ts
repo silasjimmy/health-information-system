@@ -14,10 +14,10 @@ import { TypeOrmConfigService } from './services/typeorm.service';
       imports: [ConfigModule],
       useClass: TypeOrmConfigService,
     }),
+    AuthModule,
     UserModule,
     ClientModule,
     ProgramModule,
-    AuthModule,
   ],
 })
 export class AppModule {}
