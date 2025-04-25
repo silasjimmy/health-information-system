@@ -10,8 +10,9 @@ import {
 import { ProgramService } from './program.service';
 import { CreateProgramDto, UpdateProgramDto } from './dto/program.dto';
 import { ErrorResult, SuccessResult } from 'src/utils/common.util';
-import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('program')
 @Controller('programs')
 export class ProgramController {
   constructor(private readonly programService: ProgramService) {}
@@ -58,7 +59,7 @@ export class ProgramController {
     description: 'Internal server error',
     status: 500,
   })
-  async findAll() {
+  async findAll(): Promise<SuccessResult | ErrorResult> {
     try {
       const res = await this.programService.findAll();
 
@@ -85,7 +86,9 @@ export class ProgramController {
     description: 'Internal server error',
     status: 500,
   })
-  async findOneById(@Param('id') id: number) {
+  async findOneById(
+    @Param('id') id: number,
+  ): Promise<SuccessResult | ErrorResult> {
     try {
       const res = await this.programService.findOneById(id);
 
@@ -112,7 +115,10 @@ export class ProgramController {
     description: 'Internal server error',
     status: 500,
   })
-  async update(@Param('id') id: number, @Body() payload: UpdateProgramDto) {
+  async update(
+    @Param('id') id: number,
+    @Body() payload: UpdateProgramDto,
+  ): Promise<SuccessResult | ErrorResult> {
     try {
       const res = await this.programService.update(id, payload);
 
@@ -139,7 +145,7 @@ export class ProgramController {
     description: 'Internal server error',
     status: 500,
   })
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id') id: number): Promise<SuccessResult | ErrorResult> {
     try {
       const res = await this.programService.remove(id);
 

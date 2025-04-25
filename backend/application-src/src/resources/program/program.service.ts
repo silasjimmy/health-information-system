@@ -13,7 +13,7 @@ export class ProgramService {
 
   /**
    * Creates a new program record in the database
-   * @param createProgramDto
+   * @param createProgramDto program's information
    * @returns A resolved promise containing the newly created program details
    */
   create(
