@@ -26,7 +26,7 @@ export class User {
   @Column({ nullable: true })
   photoUrl: string;
 
-  @Column({ default: false })
+  @Column({ default: true })
   isLoggedIn: boolean;
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.NURSE })
