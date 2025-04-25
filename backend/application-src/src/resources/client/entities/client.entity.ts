@@ -1,8 +1,11 @@
+import { Program } from 'src/resources/program/entities/program.entity';
 import { Gender } from 'src/utils/common.util';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -30,12 +33,23 @@ export class Client {
   @Column({ type: 'enum', enum: Gender })
   gender: Gender;
 
-  @Column()
-  programs: string;
-
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToMany(() => Program, (program) => program.clients, { eager: true }) // Load a client with all related programs
+  @JoinTable({
+    name: 'client_program',
+    joinColumn: {
+      name: 'clientId',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'programId',
+      referencedColumnName: 'id',
+    },
+  })
+  programs: Program[];
 }

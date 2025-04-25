@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Client } from 'src/resources/client/entities/client.entity';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('program')
 /**
@@ -17,6 +18,6 @@ export class Program {
   @Column()
   description: string;
 
-  @Column()
-  users: string;
+  @ManyToMany(() => Client, (client) => client.programs)
+  clients: Client[];
 }
