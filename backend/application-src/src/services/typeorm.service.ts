@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { Client } from 'src/resources/client/entities/client.entity';
+import { Program } from 'src/resources/program/entities/program.entity';
 import { User } from 'src/resources/user/entities/user.entity';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       username: this.configService.get<string>('DATABASE_USERNAME'),
       password: this.configService.get<string>('DATABASE_PASSWORD'),
       database: this.configService.get<string>('DATABASE_NAME'),
-      entities: [User, Client], // Database tables
+      entities: [User, Client, Program], // Database tables
       synchronize: this.configService.get<boolean>('DATABASE_SYNCRONIZE'), // Set to `false` in production to avoid data loss
       logging: this.configService.get<boolean>('DATABASE_LOGGING'),
     };
