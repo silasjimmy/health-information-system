@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProgramDto } from './dto/create-program.dto';
-import { UpdateProgramDto } from './dto/update-program.dto';
+import { CreateProgramDto } from './dto/program.dto';
 
 @Injectable()
 export class ProgramService {
@@ -16,9 +15,9 @@ export class ProgramService {
     return `This action returns a #${id} program`;
   }
 
-  update(id: number, updateProgramDto: UpdateProgramDto) {
+  /* update(id: number, updateProgramDto: UpdateProgramDto) {
     return `This action updates a #${id} program`;
-  }
+  } */
 
   remove(id: number) {
     return `This action removes a #${id} program`;
