@@ -54,9 +54,14 @@
 </template>
 
 <script setup lang="ts">
+import router from "@/router";
+import { useUserStore } from "@/stores/user";
 import type { LoginForm } from "@/utils/commonUtils";
+import axios from "axios";
 import { reactive, ref } from "vue";
 import { RouterLink } from "vue-router";
+
+const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 
 const form = reactive<LoginForm>({
   email: null,
@@ -66,6 +71,8 @@ const form = reactive<LoginForm>({
 const loginForm = ref();
 const loginBtnLoading = ref(false);
 
+const userStore = useUserStore();
+
 /**
  * Authenticates and authorizes the user
  */
@@ -73,12 +80,33 @@ function signIn() {
   loginForm.value
     .validate()
     .then(() => {
+      loginBtnLoading.value = true;
+
       // Make API call to sign in user
+      axios
+        .post(`${apiEndpoint}/auth/sign-in`, {
+          email: form.email,
+          password: form.password,
+        })
+        .then((res) => {
+          // Retrieve the user JWT from the response
+          const accessToken = res.data.data;
 
-      // Retrieve JWT
+          // Store JWT in the user store
+          userStore.$patch({
+            accessToken: accessToken,
+          });
 
-      // Store JWT in store
-      console.log(form);
+          // Store JWT in local storage
+          localStorage.setItem("accessToken", accessToken);
+
+          // Redirect the user to the dashboard
+          router.replace({ name: "clients" });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => (loginBtnLoading.value = false));
     })
     .catch(() => {
       return;

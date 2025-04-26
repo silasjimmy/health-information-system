@@ -42,17 +42,17 @@
           <span>Settings</span>
         </a-menu-item>
       </a-menu-item-group>
-    </a-menu>
 
-    <div class="action-wrapper">
-      <a-button block>
-        <logout-outlined />
-        <span>Logout</span>
-      </a-button>
-    </div>
+      <div class="action-wrapper">
+        <a-button block>
+          <logout-outlined />
+          <span>Logout</span>
+        </a-button>
+      </div>
+    </a-menu>
   </a-layout-sider>
 
-  <a-layout>
+  <a-layout :style="layoutStyles">
     <a-layout-header :style="headerStyles">
       <a-typography-title :level="2">{{
         $route.meta.pageTitle
@@ -79,14 +79,28 @@ import {
 } from "@ant-design/icons-vue";
 import router from "@/router";
 
+// Define a-layout override styles
+const layoutStyles: CSSProperties = {
+  marginLeft: "200px",
+};
+
 // Define a-layout-sider override styles
 const siderStyles: CSSProperties = {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  bottom: 0,
+  height: "100vh",
+  overflow: "auto",
   backgroundColor: "#ffffff",
   borderRight: "1px solid #eeeeee",
 };
 
 // Define a-layout-header override styles
 const headerStyles: CSSProperties = {
+  position: "fixed",
+  zIndex: 1,
+  width: "100%",
   backgroundColor: "#ffffff",
   borderBottom: "1px solid #eeeeee",
   display: "flex",
@@ -106,9 +120,6 @@ const route = useRoute();
 // Track the active menu item in the sider
 const selectedKeys = ref<string[]>([route.name as string]);
 
-// Track the page title depending on the view displayed
-const headerTitle = ref<string>("Clients");
-
 /**
  * Navigates the application to different views
  * @param routeName name of the route to navigate to
@@ -122,8 +133,8 @@ function navigateTo(routeName: string): void {
 
 <style scoped>
 .logo-wrapper {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   margin: 50px auto;
 }
 
@@ -134,6 +145,6 @@ function navigateTo(routeName: string): void {
 }
 
 .action-wrapper {
-  padding: 30px 8px 0 8px;
+  padding: 12px 8px 30px 8px;
 }
 </style>

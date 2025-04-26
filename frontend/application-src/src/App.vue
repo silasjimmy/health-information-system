@@ -1,5 +1,5 @@
 <template>
-  <a-layout :style="layoutStyles">
+  <a-layout has-sider :style="layoutStyles">
     <!-- Customize the app theme -->
     <a-config-provider
       :theme="{
