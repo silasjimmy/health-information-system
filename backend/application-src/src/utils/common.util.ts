@@ -27,6 +27,14 @@ export interface ErrorResult {
   error: any;
 }
 
+// User JWT type
+export interface UserJWT {
+  id: number;
+  email: string;
+  role: UserRole;
+  loggedIn: boolean;
+}
+
 /**
  * Hashes a user's password using the bcrypt library
  * @param password user's password to hash

@@ -25,6 +25,7 @@ DATABASE_NAME=<your database name>
 DATABASE_SYNCRONIZE=<true to update database everytime there are changes, false otherwise>
 DATABASE_LOGGING=<true to log database operations, false otherwise>
 APP_PORT=<port number the app shoul listen to; default 3000>
+JWT_SECRET=<a secret to use when minting and verifying user access tokens>
 ```
 
 ### Deployment

@@ -8,7 +8,7 @@ import { User } from 'src/resources/user/entities/user.entity';
 
 @Injectable()
 /**
- * Instantiates a TypeORM instance to connect the application to the database
+ * Defines the TypeOrm options for injection
  */
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   constructor(private configService: ConfigService) {}

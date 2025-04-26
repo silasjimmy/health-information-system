@@ -3,10 +3,15 @@ import { SignUpDto, UpdateLoggedInDto, UpdateProfileDto } from './dto/auth.dto';
 import { UserService } from '../user/user.service';
 import { UpdateResult } from 'typeorm';
 import { User } from '../user/entities/user.entity';
+import { JwtService } from '@nestjs/jwt';
+import { UserJWT } from 'src/utils/common.util';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   /**
    * Creates a new user account in the database
@@ -41,5 +46,14 @@ export class AuthService {
     updateProfileDto: UpdateProfileDto,
   ): Promise<UpdateResult> {
     return this.userService.updateProfile(id, updateProfileDto);
+  }
+
+  /**
+   * Generates a user access token for consumption
+   * @param userJwtData user data to use to mint an access token
+   * @returns A resolved promise containing the minted jwt
+   */
+  generateUserJWT(userJwtData: UserJWT): Promise<string> {
+    return this.jwtService.signAsync(userJwtData);
   }
 }

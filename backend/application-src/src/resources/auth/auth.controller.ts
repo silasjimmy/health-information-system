@@ -65,8 +65,13 @@ export class AuthController {
           password: hashedPassword,
         });
 
-        // 4. Generate a user JWT using id, email, role and token expiry time
-        const jwt = 'user jwt';
+        // 4. Generate a user JWT using id, email, role and logged in status
+        const jwt = await this.authService.generateUserJWT({
+          id: res.id,
+          email: res.email,
+          role: res.role,
+          loggedIn: res.isLoggedIn,
+        });
 
         return {
           statusCode: 201,
@@ -93,8 +98,8 @@ export class AuthController {
     status: 400,
   })
   @ApiResponse({
-    description: 'Forbidden',
-    status: 403,
+    description: 'Unauthorized',
+    status: 401,
   })
   @ApiResponse({
     description: 'Not found',
@@ -120,8 +125,13 @@ export class AuthController {
             isLoggedIn: true,
           });
 
-          // 5. Generate a user JWT using id, email, role and token expiry time
-          const jwt = '';
+          // 4. Generate a user JWT using id, email, role and logged in status
+          const jwt = await this.authService.generateUserJWT({
+            id: user.id,
+            email: user.email,
+            role: user.role,
+            loggedIn: user.isLoggedIn,
+          });
 
           return {
             statusCode: 201,
@@ -134,11 +144,11 @@ export class AuthController {
            */
           throw new HttpException(
             {
-              statusCode: HttpStatus.FORBIDDEN,
+              statusCode: HttpStatus.UNAUTHORIZED,
               message: 'Invalid password',
-              error: 'Forbidden',
+              error: 'Unauthorized',
             },
-            HttpStatus.FORBIDDEN,
+            HttpStatus.UNAUTHORIZED,
             { cause: null },
           );
         }
