@@ -42,6 +42,13 @@
           >Login</a-button
         >
       </div>
+
+      <div class="action-wrapper">
+        <a-typography-text
+          >Don't have an account?
+          <router-link to="/create-account">Create one</router-link>
+        </a-typography-text>
+      </div>
     </a-card>
   </div>
 </template>
@@ -49,6 +56,7 @@
 <script setup lang="ts">
 import type { LoginForm } from "@/utils/commonUtils";
 import { reactive, ref } from "vue";
+import { RouterLink } from "vue-router";
 
 const form = reactive<LoginForm>({
   email: null,
@@ -65,6 +73,11 @@ function signIn() {
   loginForm.value
     .validate()
     .then(() => {
+      // Make API call to sign in user
+
+      // Retrieve JWT
+
+      // Store JWT in store
       console.log(form);
     })
     .catch(() => {
@@ -98,6 +111,7 @@ function signIn() {
 }
 
 .action-wrapper {
-  padding-top: 20px;
+  padding-top: 10px;
+  text-align: center;
 }
 </style>

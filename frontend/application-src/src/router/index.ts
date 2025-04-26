@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import DashboardView from "../views/DashboardView.vue";
 import LoginView from "../views/LoginView.vue";
 import CreateAccountView from "@/views/CreateAccountView.vue";
+import { checkAuth } from "./guard";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,7 @@ const router = createRouter({
           component: () => import("../views/ClientsView.vue"),
           meta: {
             pageTitle: "Clients",
+            requiresAuth: true,
           },
         },
         {
@@ -29,6 +31,7 @@ const router = createRouter({
           component: () => import("../views/ProgramsView.vue"),
           meta: {
             pageTitle: "Programs",
+            requiresAuth: true,
           },
         },
         {
@@ -37,6 +40,7 @@ const router = createRouter({
           component: () => import("../views/ProfileView.vue"),
           meta: {
             pageTitle: "Profile",
+            requiresAuth: true,
           },
         },
         {
@@ -45,6 +49,7 @@ const router = createRouter({
           component: () => import("../views/SettingsView.vue"),
           meta: {
             pageTitle: "Settings",
+            requiresAuth: true,
           },
         },
       ],
@@ -53,13 +58,21 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: LoginView,
+      meta: {
+        requiresAuth: false,
+      },
     },
     {
       path: "/create-account",
       name: "create-account",
       component: CreateAccountView,
+      meta: {
+        requiresAuth: false,
+      },
     },
   ],
 });
+
+router.beforeEach(checkAuth);
 
 export default router;
