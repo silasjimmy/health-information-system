@@ -39,9 +39,13 @@ npm run dev
 
 1. Images
 
-![Web app start]([http://url/to/img.png](https://github.com/silasjimmy/health-information-system/blob/development/frontend/frontend-app-running.png))
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://github.com/silasjimmy/health-information-system/blob/development/frontend/frontend-app-running.png" width="300" alt="Web app start" /></a>
+</p>
 
-![Web app view]([http://url/to/img.png](https://github.com/silasjimmy/health-information-system/blob/development/frontend/frontend-web-app.png)) 
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://github.com/silasjimmy/health-information-system/blob/development/frontend/frontend-web-app.png" width="300" alt="Web app view" /></a>
+</p>
 
 2. Demo
 

@@ -48,9 +48,13 @@ npm run start:dev
 
 1. Images
 
-![Backend service start](http://url/to/img.png) 
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://github.com/silasjimmy/health-information-system/blob/development/backend/backend-service-running.png" width="300" alt="Backend service start" /></a>
+</p>
 
-![Backend service UI](http://url/to/img.png) 
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://github.com/silasjimmy/health-information-system/blob/development/backend/backend-swagger-ui.png" width="300" alt="Backend service UI" /></a>
+</p>
 
 2. Demo
 
