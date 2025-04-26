@@ -1,9 +1,18 @@
-import { Controller, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Patch,
+  Param,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto, SignUpDto, UpdateProfileDto } from './dto/auth.dto';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
+import { hashPassword, isPasswordValid } from 'src/utils/common.util';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -34,32 +43,39 @@ export class AuthController {
 
       // 1. Check if user exists with the provided email
       if (user) {
-        // Throw a user exists error
+        /**
+         * Throw a user exists error
+         */
+        throw new HttpException(
+          {
+            statusCode: HttpStatus.CONFLICT,
+            message: `User with email address ${payload.email} already exists`,
+            error: 'Conflict',
+          },
+          HttpStatus.CONFLICT,
+          { cause: null },
+        );
       } else {
-        // 2. Encrypt the user's password
-        const encryptedPassword = payload.password;
+        // 2. Hash the user's password
+        const hashedPassword = await hashPassword(payload.password);
 
         // 3. Create user account
         const res = await this.authService.createAccount({
           email: payload.email,
-          password: encryptedPassword,
+          password: hashedPassword,
         });
 
         // 4. Generate a user JWT using id, email, role and token expiry time
         const jwt = 'user jwt';
 
         return {
-          status: 201,
+          statusCode: 201,
           message: 'User account created successfully',
           data: jwt,
         };
       }
     } catch (error) {
-      return {
-        status: 400,
-        message: 'Bad request',
-        error: error,
-      };
+      throw error;
     }
   }
 
@@ -76,6 +92,14 @@ export class AuthController {
     description: 'Bad request',
     status: 400,
   })
+  @ApiResponse({
+    description: 'Forbidden',
+    status: 403,
+  })
+  @ApiResponse({
+    description: 'Not found',
+    status: 404,
+  })
   async signIn(@Body() payload: SignInDto): Promise<any> {
     try {
       const user: User | null = await this.userService.findOneByEmail(
@@ -84,12 +108,14 @@ export class AuthController {
 
       // 1. Check if the user with the provided email exists
       if (user) {
-        // 2. Compare the provided user password with the salted hash
-        const decryptedPassword = user.password;
+        const validUserPassword = await isPasswordValid(
+          payload.password,
+          user.password,
+        );
 
-        // 3. Check if the provided password is correct
-        if (payload.password === decryptedPassword) {
-          // 4. Update isLoggedIn state
+        // 2. Check if the provided password is correct
+        if (validUserPassword) {
+          // 3. Update isLoggedIn state
           await this.authService.updateIsLoggedIn(user.id, {
             isLoggedIn: true,
           });
@@ -98,22 +124,40 @@ export class AuthController {
           const jwt = '';
 
           return {
-            status: 201,
+            statusCode: 201,
             message: 'User logged in successfully',
             data: jwt,
           };
         } else {
-          // Throw a password invalid error
+          /**
+           * Throw an invalid user password error
+           */
+          throw new HttpException(
+            {
+              statusCode: HttpStatus.FORBIDDEN,
+              message: 'Invalid password',
+              error: 'Forbidden',
+            },
+            HttpStatus.FORBIDDEN,
+            { cause: null },
+          );
         }
       } else {
-        // Throw a user not found error
+        /**
+         * Throw user account not found error
+         */
+        throw new HttpException(
+          {
+            statusCode: HttpStatus.NOT_FOUND,
+            message: `User with email address ${payload.email} was not found`,
+            error: 'Not found',
+          },
+          HttpStatus.NOT_FOUND,
+          { cause: null },
+        );
       }
     } catch (error) {
-      return {
-        status: 400,
-        message: 'Bad request',
-        error: error,
-      };
+      throw error;
     }
   }
 
