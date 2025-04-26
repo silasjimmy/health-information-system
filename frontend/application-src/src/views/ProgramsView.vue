@@ -9,7 +9,7 @@
     </a-flex>
   </div>
 
-  <a-table :columns="columns" :data-source="data">
+  <a-table :columns="columns" :data-source="programs" :loading="tableLoading">
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'name'">
         <span> {{ record.label }}</span>
@@ -17,7 +17,7 @@
 
       <template v-else-if="column.key === 'clients'">
         <span>
-          {{ record.clients }}
+          {{ record.clients.length }}
         </span>
       </template>
 
@@ -26,14 +26,6 @@
           <a-tooltip placement="top" title="Edit program details">
             <a-button shape="circle" type="text" size="large">
               <EditOutlined />
-            </a-button>
-          </a-tooltip>
-
-          <a-divider type="vertical" />
-
-          <a-tooltip placement="top" title="Delete program">
-            <a-button shape="circle" type="text" size="large">
-              <DeleteOutlined />
             </a-button>
           </a-tooltip>
         </div>
@@ -53,11 +45,17 @@
 import {
   EditOutlined,
   PlusOutlined,
-  DeleteOutlined,
 } from "@ant-design/icons-vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import AddProgramForm from "@/components/AddProgramForm.vue";
+import { useProgramStore } from "@/stores/program";
+import { storeToRefs } from "pinia";
 
+const openAddProgramFormModal = ref<boolean>(false);
+const addProgramFormLoading = ref<boolean>(false);
+const tableLoading = ref(false);
+const programStore = useProgramStore();
+const { programs } = storeToRefs(programStore);
 const columns = [
   {
     title: "Name",
@@ -75,37 +73,26 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    label: "Malaria",
-    value: "malaria",
-    clients: 13,
-  },
-  {
-    id: 2,
-    label: "TB",
-    value: "tb",
-    clients: 2,
-  },
-  {
-    id: 3,
-    label: "HIV",
-    value: "hiv",
-    clients: 29,
-  },
-];
+onMounted(async () => {
+  if (programs.value.length === 0) {
+    tableLoading.value = true;
 
-const openAddProgramFormModal = ref<boolean>(false);
-const addProgramFormLoading = ref<boolean>(false);
+    await programStore.getPrograms();
+
+    tableLoading.value = false;
+  }
+});
 
 /**
  * Saves the newly registered client in the database
- * @param event
+ * @param data program's information
  */
-function saveNewProgram(event: any) {
-  console.log(event);
+async function saveNewProgram(data: any) {
+  addProgramFormLoading.value = true
 
+  await programStore.addProgram(data)
+
+  addProgramFormLoading.value = false
   openAddProgramFormModal.value = false;
 }
 

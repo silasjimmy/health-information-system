@@ -2,6 +2,6 @@
 
 /* Override Ant Design default styles */
 
-h2 {
+h2, h5 {
   margin: 0 !important;
 }

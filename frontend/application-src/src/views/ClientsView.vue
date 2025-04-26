@@ -16,7 +16,7 @@
     </a-flex>
   </div>
 
-  <a-table :columns="columns" :data-source="data">
+  <a-table :columns="columns" :data-source="clients" :loading="tableLoading">
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'name'">
         <span> {{ record.firstName }} {{ record.lastName }} </span>
@@ -35,14 +35,6 @@
           <a-tooltip placement="top" title="View client">
             <a-button shape="circle" type="text" size="large">
               <EyeOutlined />
-            </a-button>
-          </a-tooltip>
-
-          <a-divider type="vertical" />
-
-          <a-tooltip placement="top" title="Edit client details">
-            <a-button shape="circle" type="text" size="large">
-              <EditOutlined />
             </a-button>
           </a-tooltip>
 
@@ -70,12 +62,18 @@
 import {
   EyeOutlined,
   PlusCircleOutlined,
-  EditOutlined,
   PlusOutlined,
 } from "@ant-design/icons-vue";
 import AddClientForm from "@/components/AddClientForm.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useClientStore } from "@/stores/client";
+import { storeToRefs } from "pinia";
 
+const openAddClientFormModal = ref<boolean>(false);
+const addClientFormLoading = ref<boolean>(false);
+const tableLoading = ref<boolean>(false);
+const clientStore = useClientStore();
+const { clients } = storeToRefs(clientStore);
 const columns = [
   {
     title: "Name",
@@ -93,52 +91,18 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    firstName: "John",
-    lastName: "Brown",
-    programs: [
-      {
-        id: 1,
-        label: "Malaria",
-        value: "malaria",
-      },
-      {
-        id: 2,
-        label: "TB",
-        value: "tb",
-      },
-    ],
-  },
-  {
-    id: 2,
-    firstName: "Jim",
-    lastName: "Green",
-    programs: [
-      {
-        id: 1,
-        label: "Malaria",
-        value: "malaria",
-      },
-    ],
-  },
-  {
-    id: 3,
-    firstName: "Joe",
-    lastName: "Black",
-    programs: [
-      {
-        id: 3,
-        label: "HIV",
-        value: "hiv",
-      },
-    ],
-  },
-];
+/**
+ * Load clients from the database
+ */
+onMounted(async () => {
+  if (clients.value.length === 0) {
+    tableLoading.value = true;
 
-const openAddClientFormModal = ref<boolean>(false);
-const addClientFormLoading = ref<boolean>(false)
+    await clientStore.getClients();
+
+    tableLoading.value = false;
+  }
+});
 
 /**
  * Searches for a client with the provided name
@@ -150,19 +114,31 @@ function searchClient(name: string) {
 
 /**
  * Saves the newly registered client in the database
- * @param event 
+ * @param data client's information
  */
-function saveNewClient(event: any) {
-  console.log(event);
+async function saveNewClient(data: any) {
+  addClientFormLoading.value = true;
 
-  openAddClientFormModal.value = false
+  const payload = {
+    firstName: data.firstName,
+    lastName: data.lastName,
+    email: data.email,
+    gender: data.gender,
+    age: Number(data.age),
+    programIds: Object.values(data.programs),
+  };
+
+  await clientStore.addClient(payload);
+
+  addClientFormLoading.value = false;
+  openAddClientFormModal.value = false;
 }
 
 /**
  * Closes the form modal
  */
 function closeAddClientFormModal() {
-  openAddClientFormModal.value = false
+  openAddClientFormModal.value = false;
 }
 </script>
 

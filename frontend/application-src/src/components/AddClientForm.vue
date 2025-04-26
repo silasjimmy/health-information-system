@@ -96,7 +96,7 @@
 import { useProgramStore } from "@/stores/program";
 import type { AddNewClientForm } from "@/utils/commonUtils";
 import { storeToRefs } from "pinia";
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 
 // Define component props
 defineProps<{
@@ -121,6 +121,10 @@ const newClientForm = ref();
 
 const programStore = useProgramStore();
 const { programs } = storeToRefs(programStore);
+
+onMounted(async () => {
+  if (programs.value.length === 0) await programStore.getPrograms();
+});
 
 /**
  * Validates the form before emitting the form information to the parent component

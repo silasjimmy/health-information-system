@@ -35,12 +35,6 @@
 
           <span>Profile</span>
         </a-menu-item>
-
-        <a-menu-item key="settings" @click="navigateTo('settings')">
-          <setting-outlined />
-
-          <span>Settings</span>
-        </a-menu-item>
       </a-menu-item-group>
 
       <div class="action-wrapper">
@@ -112,6 +106,7 @@ const headerStyles: CSSProperties = {
 const contentStyles: CSSProperties = {
   backgroundColor: "#ffffff",
   padding: "20px",
+  marginTop: "64px"
 };
 
 // Route info object
@@ -135,7 +130,7 @@ function navigateTo(routeName: string): void {
 .logo-wrapper {
   width: 100px;
   height: 100px;
-  margin: 50px auto;
+  margin: 20px auto;
 }
 
 .logo-wrapper img {
