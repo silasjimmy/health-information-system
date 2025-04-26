@@ -16,6 +16,7 @@ async function bootstrap() {
   const swaggerConfig = new DocumentBuilder()
     .setTitle('CEMA HMS API')
     .setDescription('CEMA health system REST API documentation')
+    .addBearerAuth()
     .build();
   const documentFactory = () =>
     SwaggerModule.createDocument(app, swaggerConfig);

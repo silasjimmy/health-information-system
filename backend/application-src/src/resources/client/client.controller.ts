@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto, UpdateClientDto } from './dto/client.dto';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ErrorResult, SuccessResult } from 'src/utils/common.util';
 import { ProgramService } from '../program/program.service';
 import { ClientProgramService } from '../client-program/client-program.service';
@@ -18,6 +18,7 @@ import { Program } from '../program/entities/program.entity';
 import { AuthGuard } from 'src/guards/auth.guard';
 
 @ApiTags('client')
+@ApiBearerAuth()
 @Controller('clients')
 export class ClientController {
   constructor(

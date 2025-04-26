@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto, SignUpDto, UpdateProfileDto } from './dto/auth.dto';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
 import { hashPassword, isPasswordValid } from 'src/utils/common.util';
@@ -20,6 +20,7 @@ import { AuthGuard } from '../../guards/auth.guard';
 import { Request } from 'express';
 
 @ApiTags('auth')
+@ApiBearerAuth()
 @Controller('auth')
 export class AuthController {
   constructor(

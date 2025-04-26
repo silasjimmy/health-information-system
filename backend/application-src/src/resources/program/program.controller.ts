@@ -11,10 +11,11 @@ import {
 import { ProgramService } from './program.service';
 import { CreateProgramDto, UpdateProgramDto } from './dto/program.dto';
 import { ErrorResult, SuccessResult } from 'src/utils/common.util';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guards/auth.guard';
 
 @ApiTags('program')
+@ApiBearerAuth()
 @Controller('programs')
 export class ProgramController {
   constructor(private readonly programService: ProgramService) {}
