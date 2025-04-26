@@ -37,7 +37,12 @@
       <template v-else-if="column.key === 'action'">
         <div>
           <a-tooltip placement="top" title="View client">
-            <a-button shape="circle" type="text" size="large">
+            <a-button
+              shape="circle"
+              type="text"
+              size="large"
+              @click="$router.push(`/clients/profile/${record.id}`)"
+            >
               <EyeOutlined />
             </a-button>
           </a-tooltip>

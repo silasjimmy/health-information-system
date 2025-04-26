@@ -40,11 +40,22 @@ export const useClientStore = defineStore("client", () => {
     await getClients();
   }
 
+  async function getClient(id: number) {
+    const res = await axios.get(`${apiEndpoint}/clients/client/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    return res.data.data;
+  }
+
   return {
     clients,
     filteredClients,
     getClients,
     addClient,
+    getClient,
     searchClientsByName,
   };
 });
