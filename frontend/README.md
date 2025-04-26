@@ -39,9 +39,9 @@ npm run dev
 
 1. Images
 
-![Web app start](http://url/to/img.png)
+![Web app start]([http://url/to/img.png](https://github.com/silasjimmy/health-information-system/blob/development/frontend/frontend-app-running.png))
 
-![Web app view](http://url/to/img.png) 
+![Web app view]([http://url/to/img.png](https://github.com/silasjimmy/health-information-system/blob/development/frontend/frontend-web-app.png)) 
 
 2. Demo
 
