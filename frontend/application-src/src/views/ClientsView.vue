@@ -16,7 +16,11 @@
     </a-flex>
   </div>
 
-  <a-table :columns="columns" :data-source="clients" :loading="tableLoading">
+  <a-table
+    :columns="columns"
+    :data-source="filteredClients"
+    :loading="tableLoading"
+  >
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'name'">
         <span> {{ record.firstName }} {{ record.lastName }} </span>
@@ -73,7 +77,7 @@ const openAddClientFormModal = ref<boolean>(false);
 const addClientFormLoading = ref<boolean>(false);
 const tableLoading = ref<boolean>(false);
 const clientStore = useClientStore();
-const { clients } = storeToRefs(clientStore);
+const { clients, filteredClients } = storeToRefs(clientStore);
 const columns = [
   {
     title: "Name",
@@ -108,8 +112,12 @@ onMounted(async () => {
  * Searches for a client with the provided name
  * @param name client's name
  */
-function searchClient(name: string) {
-  console.log("client name:", name);
+async function searchClient(name: string) {
+  tableLoading.value = true;
+
+  await clientStore.searchClientsByName(name.toLowerCase());
+
+  tableLoading.value = false;
 }
 
 /**

@@ -7,7 +7,17 @@ const accessToken = localStorage.getItem("accessToken");
 
 export const useClientStore = defineStore("client", () => {
   const clients = ref([]);
-  // const doubleCount = computed(() => count.value * 2)
+  const filteredClients = ref([]);
+
+  async function searchClientsByName(name: string) {
+    if (name === "") filteredClients.value = clients.value;
+    else
+      filteredClients.value = clients.value.filter(
+        (client: any) =>
+          client.firstName.toLowerCase() === name ||
+          client.lastName.toLowerCase() === name
+      );
+  }
 
   async function getClients() {
     const res = await axios.get(`${apiEndpoint}/clients/all`, {
@@ -17,6 +27,7 @@ export const useClientStore = defineStore("client", () => {
     });
 
     clients.value = res.data.data;
+    filteredClients.value = res.data.data;
   }
 
   async function addClient(data: any) {
@@ -29,5 +40,11 @@ export const useClientStore = defineStore("client", () => {
     await getClients();
   }
 
-  return { clients, getClients, addClient };
+  return {
+    clients,
+    filteredClients,
+    getClients,
+    addClient,
+    searchClientsByName,
+  };
 });
