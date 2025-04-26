@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto, UpdateClientDto } from './dto/client.dto';
@@ -14,6 +15,7 @@ import { ErrorResult, SuccessResult } from 'src/utils/common.util';
 import { ProgramService } from '../program/program.service';
 import { ClientProgramService } from '../client-program/client-program.service';
 import { Program } from '../program/entities/program.entity';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @ApiTags('client')
 @Controller('clients')
@@ -24,6 +26,7 @@ export class ClientController {
     private readonly clientProgramService: ClientProgramService,
   ) {}
 
+  @UseGuards(AuthGuard)
   @Post('client')
   @ApiBody({
     description: 'Create new client payload',
@@ -75,6 +78,8 @@ export class ClientController {
     }
   }
 
+  @UseGuards(AuthGuard)
+  @Get('all')
   @ApiResponse({
     description: 'Clients retrieved successfully',
     status: 200,
@@ -83,7 +88,6 @@ export class ClientController {
     description: 'Internal server error',
     status: 500,
   })
-  @Get('all')
   async findAll(): Promise<SuccessResult | ErrorResult> {
     try {
       const res = await this.clientService.findAll();
@@ -102,6 +106,7 @@ export class ClientController {
     }
   }
 
+  @Get('client/:id')
   @ApiResponse({
     description: 'Client retrieved successfully',
     status: 200,
@@ -110,7 +115,6 @@ export class ClientController {
     description: 'Internal server error',
     status: 500,
   })
-  @Get('client/:id')
   async findOneById(
     @Param('id') id: number,
   ): Promise<SuccessResult | ErrorResult> {
@@ -131,6 +135,7 @@ export class ClientController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Patch('client/:id')
   @ApiResponse({
     description: 'Client updated successfully',
@@ -161,6 +166,7 @@ export class ClientController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Delete('client/:id')
   @ApiResponse({
     description: 'Client deleted successfully',

@@ -10,6 +10,7 @@ import { JwtConfigService } from 'src/services/jwt.service';
 
 @Module({
   imports: [
+    ConfigModule,
     TypeOrmModule.forFeature([User]),
     JwtModule.registerAsync({
       imports: [ConfigModule],

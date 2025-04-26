@@ -6,17 +6,20 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ProgramService } from './program.service';
 import { CreateProgramDto, UpdateProgramDto } from './dto/program.dto';
 import { ErrorResult, SuccessResult } from 'src/utils/common.util';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @ApiTags('program')
 @Controller('programs')
 export class ProgramController {
   constructor(private readonly programService: ProgramService) {}
 
+  @UseGuards(AuthGuard)
   @Post('program')
   @ApiBody({
     description: 'Create new program payload',
@@ -50,6 +53,7 @@ export class ProgramController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get('all')
   @ApiResponse({
     description: 'Programs retrieved successfully',
@@ -77,6 +81,7 @@ export class ProgramController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get('program/:id')
   @ApiResponse({
     description: 'Program retrieved successfully',
@@ -106,6 +111,7 @@ export class ProgramController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Patch('program/:id')
   @ApiResponse({
     description: 'Program updated successfully',
@@ -136,6 +142,7 @@ export class ProgramController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Delete('program/:id')
   @ApiResponse({
     description: 'Program deleted successfully',
