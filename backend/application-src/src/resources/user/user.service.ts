@@ -31,7 +31,12 @@ export class UserService {
    * null if the user is not found
    */
   findOneById(id: number): Promise<User | null> {
-    return this.userRepository.findOneBy({ id });
+    return this.userRepository.findOne({
+      where: {
+        id: id,
+      },
+      select: ['id', 'fullName', 'email', 'photoUrl', 'isLoggedIn', 'role'],
+    });
   }
 
   /**

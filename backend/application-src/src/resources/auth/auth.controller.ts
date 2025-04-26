@@ -7,14 +7,17 @@ import {
   HttpException,
   HttpStatus,
   UseGuards,
+  Get,
+  Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto, SignUpDto, UpdateProfileDto } from './dto/auth.dto';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
-import { hashPassword, isPasswordValid, UserRole } from 'src/utils/common.util';
+import { hashPassword, isPasswordValid } from 'src/utils/common.util';
 import { AuthGuard } from '../../guards/auth.guard';
+import { Request } from 'express';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -174,6 +177,36 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
+  @Get('/profile')
+  @ApiResponse({
+    description: 'User profile retrieved successfully',
+    status: 200,
+  })
+  @ApiResponse({
+    description: 'Internal server error',
+    status: 500,
+  })
+  async getProfile(@Req() request: Request) {
+    try {
+      const userRequest = request['user'];
+
+      const res = await this.userService.findOneById(userRequest.id);
+
+      return {
+        statusCode: 200,
+        message: 'User profile retrieved successfully',
+        data: res,
+      };
+    } catch (error) {
+      return {
+        statusCode: 500,
+        message: 'Internal server error',
+        error: error,
+      };
+    }
+  }
+
+  @UseGuards(AuthGuard)
   @Patch('profile/:id')
   @ApiResponse({
     description: 'User profile updated successfully',
@@ -191,13 +224,13 @@ export class AuthController {
       const res = await this.authService.updateProfile(id, payload);
 
       return {
-        status: 200,
+        statusCode: 200,
         message: 'User profile updated successfully',
         data: res.affected,
       };
     } catch (error) {
       return {
-        status: 500,
+        statusCode: 500,
         message: 'Internal server error',
         error: error,
       };
