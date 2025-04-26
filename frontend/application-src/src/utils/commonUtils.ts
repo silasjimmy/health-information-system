@@ -28,6 +28,4 @@ export interface LoginForm {
 }
 
 // Defines the properties and types of the create account form
-export interface CreateAccountForm extends LoginForm {
-  confirmPassword: string | null;
-}
+export interface CreateAccountForm extends LoginForm {}

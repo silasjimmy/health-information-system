@@ -38,7 +38,7 @@
       </a-menu-item-group>
 
       <div class="action-wrapper">
-        <a-button block>
+        <a-button block @click="logout">
           <logout-outlined />
           <span>Logout</span>
         </a-button>
@@ -68,7 +68,6 @@ import {
   UserOutlined,
   UsergroupAddOutlined,
   LogoutOutlined,
-  SettingOutlined,
   BookOutlined,
 } from "@ant-design/icons-vue";
 import router from "@/router";
@@ -106,7 +105,7 @@ const headerStyles: CSSProperties = {
 const contentStyles: CSSProperties = {
   backgroundColor: "#ffffff",
   padding: "20px",
-  marginTop: "64px"
+  marginTop: "64px",
 };
 
 // Route info object
@@ -123,6 +122,17 @@ function navigateTo(routeName: string): void {
   router.push({
     name: routeName,
   });
+}
+
+/**
+ * Signs out the user
+ */
+function logout() {
+  localStorage.clear();
+
+  router.replace({ name: "login" });
+
+  window.location.reload()
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="view-wrapper">
-    <a-card style="min-width: 500px">
+    <a-card style="min-width: 400px">
       <div class="logo-wrapper">
         <img src="../assets/logo.png" alt="app logo" />
       </div>
@@ -31,16 +31,6 @@
         >
           <a-input-password v-model:value="form.password" />
         </a-form-item>
-
-        <a-form-item
-          label="Confirm Password"
-          name="confirmPassword"
-          :rules="[
-            { required: true, message: 'Please enter your password to confirm!' },
-          ]"
-        >
-          <a-input type="text" v-model:value="form.confirmPassword" />
-        </a-form-item>
       </a-form>
 
       <div class="action-wrapper">
@@ -53,6 +43,13 @@
           Create Account
         </a-button>
       </div>
+
+      <div class="action-wrapper">
+        <a-typography-text
+          >Already have an account?
+          <router-link to="/login">Login</router-link>
+        </a-typography-text>
+      </div>
     </a-card>
   </div>
 </template>
@@ -60,15 +57,22 @@
 <script setup lang="ts">
 import type { CreateAccountForm } from "@/utils/commonUtils";
 import { reactive, ref } from "vue";
+import { RouterLink } from "vue-router";
+import { message } from 'ant-design-vue'
+import axios from "axios";
+import { useUserStore } from "@/stores/user";
+import router from "@/router";
+
+const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 
 const form = reactive<CreateAccountForm>({
   email: null,
   password: null,
-  confirmPassword: null,
 });
 
 const createAccountForm = ref();
 const createAccountBtnLoading = ref(false);
+const userStore = useUserStore()
 
 /**
  * Authenticates and authorizes the user
@@ -77,7 +81,35 @@ function signUp() {
   createAccountForm.value
     .validate()
     .then(() => {
-      console.log(form);
+      createAccountBtnLoading.value = true;
+
+      // Make API call to sign in user
+      axios
+        .post(`${apiEndpoint}/auth/sign-up`, {
+          email: form.email,
+          password: form.password,
+        })
+        .then((res) => {
+          // Retrieve the user JWT from the response
+          const accessToken = res.data.data;
+
+          // Store JWT in the user store
+          userStore.$patch({
+            accessToken: accessToken,
+          });
+
+          // Store JWT in local storage
+          localStorage.setItem("accessToken", accessToken);
+
+          // Redirect the user to the dashboard
+          router.replace({ name: "clients" });
+        })
+        .catch((error) => {
+          console.log(error);
+          
+          message.error("Incorrect email or password!")
+        })
+        .finally(() => (createAccountBtnLoading.value = false));
     })
     .catch(() => {
       return;
@@ -110,6 +142,7 @@ function signUp() {
 }
 
 .action-wrapper {
-  padding-top: 20px;
+  padding-top: 10px;
+  text-align: center;
 }
 </style>

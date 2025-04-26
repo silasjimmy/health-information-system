@@ -60,6 +60,7 @@ import type { LoginForm } from "@/utils/commonUtils";
 import axios from "axios";
 import { reactive, ref } from "vue";
 import { RouterLink } from "vue-router";
+import { message } from 'ant-design-vue'
 
 const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 
@@ -70,7 +71,6 @@ const form = reactive<LoginForm>({
 
 const loginForm = ref();
 const loginBtnLoading = ref(false);
-
 const userStore = useUserStore();
 
 /**
@@ -104,7 +104,7 @@ function signIn() {
           router.replace({ name: "clients" });
         })
         .catch((error) => {
-          console.log(error);
+          message.error("Incorrect email or password!")
         })
         .finally(() => (loginBtnLoading.value = false));
     })

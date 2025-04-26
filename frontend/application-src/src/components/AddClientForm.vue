@@ -70,7 +70,11 @@
           </a-col>
 
           <a-col :span="24">
-            <a-form-item label="Programs" name="programs">
+            <a-form-item
+              label="Programs"
+              name="programs"
+              :rules="[{ required: true, message: 'Enroll a client in at least one program!' }]"
+            >
               <a-checkbox-group v-model:value="form.programs">
                 <a-checkbox v-for="program in programs" :value="program.id">
                   {{ program.label }}

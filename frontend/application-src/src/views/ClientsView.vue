@@ -46,14 +46,6 @@
               <EyeOutlined />
             </a-button>
           </a-tooltip>
-
-          <a-divider type="vertical" />
-
-          <a-tooltip placement="top" title="Add program">
-            <a-button shape="circle" type="text" size="large">
-              <PlusCircleOutlined />
-            </a-button>
-          </a-tooltip>
         </div>
       </template>
     </template>
@@ -68,11 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  EyeOutlined,
-  PlusCircleOutlined,
-  PlusOutlined,
-} from "@ant-design/icons-vue";
+import { EyeOutlined, PlusOutlined } from "@ant-design/icons-vue";
 import AddClientForm from "@/components/AddClientForm.vue";
 import { onMounted, ref } from "vue";
 import { useClientStore } from "@/stores/client";
@@ -104,13 +92,11 @@ const columns = [
  * Load clients from the database
  */
 onMounted(async () => {
-  if (clients.value.length === 0) {
-    tableLoading.value = true;
+  tableLoading.value = true;
 
-    await clientStore.getClients();
+  await clientStore.getClients();
 
-    tableLoading.value = false;
-  }
+  tableLoading.value = false;
 });
 
 /**

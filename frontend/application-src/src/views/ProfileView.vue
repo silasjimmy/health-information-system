@@ -32,7 +32,7 @@ const userStore = useUserStore();
 const { profile } = storeToRefs(userStore);
 
 onMounted(async () => {
-  if (!profile) await userStore.getProfile();
+  await userStore.getProfile();
 });
 </script>
 
