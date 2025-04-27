@@ -9,7 +9,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ClientService } from './client.service';
-import { CreateClientDto, UpdateClientDto } from './dto/client.dto';
+import {
+  CreateClientDto,
+  FindClientsByNameDto,
+  UpdateClientDto,
+} from './dto/client.dto';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ErrorResult, SuccessResult } from 'src/utils/common.util';
 import { ProgramService } from '../program/program.service';
@@ -26,6 +30,38 @@ export class ClientController {
     private readonly programService: ProgramService,
     private readonly clientProgramService: ClientProgramService,
   ) {}
+
+  @UseGuards(AuthGuard)
+  @ApiBody({
+    description: 'Filter clients by name payload',
+    type: FindClientsByNameDto,
+  })
+  @ApiResponse({
+    description: 'Clients retrieved successfully',
+    status: 200,
+  })
+  @ApiResponse({
+    description: 'Internal server error',
+    status: 500,
+  })
+  @Post()
+  async findAllByName(@Body() payload: FindClientsByNameDto) {
+    try {
+      const res = await this.clientService.findAllByName(payload);
+
+      return {
+        status: 200,
+        message: 'Clients retrieved successfully',
+        data: res,
+      };
+    } catch (error) {
+      return {
+        status: 500,
+        message: 'Internal server error',
+        error: error,
+      };
+    }
+  }
 
   @UseGuards(AuthGuard)
   @Post('client')
