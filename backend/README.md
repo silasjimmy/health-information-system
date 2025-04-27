@@ -28,7 +28,7 @@ APP_PORT=<port number the app should listen to; default 3000>
 JWT_SECRET=<a secret to use when minting and verifying user access tokens>
 ```
 
-> For an easy and faster setup, use the values provided in the [.env.example]() file.
+> For an easy and faster setup, use the values provided in the [.env.example](https://github.com/silasjimmy/health-information-system/blob/development/backend/.env.example) file.
 
 2. Navigate to the `application-src` folder
 
@@ -64,4 +64,4 @@ Use this [link](https://youtu.be/7nuuTnahrHw) to view the REST API service demo.
 
 ## Deployment
 
-The service is not deployed yet. However, you can utilize the deployed Postgres database in AWS RDS using the credentials provided in the [.env.example]() file.
+The service is not deployed yet. However, you can utilize the deployed Postgres database in AWS RDS using the credentials provided in the [.env.example](https://github.com/silasjimmy/health-information-system/blob/development/backend/.env.example) file.
