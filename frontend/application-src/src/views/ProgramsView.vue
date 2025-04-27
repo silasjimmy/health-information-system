@@ -42,10 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  EditOutlined,
-  PlusOutlined,
-} from "@ant-design/icons-vue";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons-vue";
 import { onMounted, ref } from "vue";
 import AddProgramForm from "@/components/AddProgramForm.vue";
 import { useProgramStore } from "@/stores/program";
@@ -74,13 +71,11 @@ const columns = [
 ];
 
 onMounted(async () => {
-  if (programs.value.length === 0) {
-    tableLoading.value = true;
+  tableLoading.value = true;
 
-    await programStore.getPrograms();
+  await programStore.getPrograms();
 
-    tableLoading.value = false;
-  }
+  tableLoading.value = false;
 });
 
 /**
@@ -88,11 +83,11 @@ onMounted(async () => {
  * @param data program's information
  */
 async function saveNewProgram(data: any) {
-  addProgramFormLoading.value = true
+  addProgramFormLoading.value = true;
 
-  await programStore.addProgram(data)
+  await programStore.addProgram(data);
 
-  addProgramFormLoading.value = false
+  addProgramFormLoading.value = false;
   openAddProgramFormModal.value = false;
 }
 
