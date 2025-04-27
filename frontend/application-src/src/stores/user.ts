@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 
 const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
+const localAccessToken = localStorage.getItem("accessToken");
 
 export const useUserStore = defineStore("user", () => {
   const accessToken = ref<string>();
@@ -11,7 +12,7 @@ export const useUserStore = defineStore("user", () => {
   async function getProfile() {
     const res = await axios.get(`${apiEndpoint}/auth/profile`, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localAccessToken}`,
       },
     });
 

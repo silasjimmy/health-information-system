@@ -65,12 +65,14 @@ import AddClientForm from "@/components/AddClientForm.vue";
 import { onMounted, ref } from "vue";
 import { useClientStore } from "@/stores/client";
 import { storeToRefs } from "pinia";
+import { useProgramStore } from "@/stores/program";
 
 const openAddClientFormModal = ref<boolean>(false);
 const addClientFormLoading = ref<boolean>(false);
 const tableLoading = ref<boolean>(false);
 const clientStore = useClientStore();
-const { clients, filteredClients } = storeToRefs(clientStore);
+const programStore = useProgramStore()
+const { filteredClients } = storeToRefs(clientStore);
 const columns = [
   {
     title: "Name",
@@ -128,6 +130,8 @@ async function saveNewClient(data: any) {
   };
 
   await clientStore.addClient(payload);
+
+  await programStore.getPrograms()
 
   addClientFormLoading.value = false;
   openAddClientFormModal.value = false;

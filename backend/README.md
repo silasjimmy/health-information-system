@@ -12,7 +12,7 @@ The backend application is developed using [NestJS](https://nestjs.com/) with [T
 
 ### Development
 
-1. Create a local Postgres database in your computer
+1. Create a local Postgres database in your computer or a remote database, e.g using AWS RDS
 
 2. In the `application-src` folder, create a `.env` file and set the following environment variables:
 
@@ -24,9 +24,11 @@ DATABASE_PASSWORD=<your database password>
 DATABASE_NAME=<your database name>
 DATABASE_SYNCRONIZE=<true to update database everytime there are changes, false otherwise>
 DATABASE_LOGGING=<true to log database operations, false otherwise>
-APP_PORT=<port number the app shoul listen to; default 3000>
+APP_PORT=<port number the app should listen to; default 3000>
 JWT_SECRET=<a secret to use when minting and verifying user access tokens>
 ```
+
+> For an easy and faster setup, use the values provided in the [.env.example](https://github.com/silasjimmy/health-information-system/blob/development/backend/.env.example) file.
 
 2. Navigate to the `application-src` folder
 
@@ -49,13 +51,17 @@ npm run start:dev
 1. Images
 
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://github.com/silasjimmy/health-information-system/blob/development/backend/backend-service-running.png" width="300" alt="Backend service start" /></a>
+  <a href="https://github.com/silasjimmy/health-information-system/blob/development/backend/backend-service-running.png" target="blank"><img src="https://github.com/silasjimmy/health-information-system/blob/development/backend/backend-service-running.png" width="500" alt="Backend service start" /></a>
 </p>
 
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://github.com/silasjimmy/health-information-system/blob/development/backend/backend-swagger-ui.png" width="300" alt="Backend service UI" /></a>
+  <a href="https://github.com/silasjimmy/health-information-system/blob/development/backend/backend-swagger-ui.png" target="blank"><img src="https://github.com/silasjimmy/health-information-system/blob/development/backend/backend-swagger-ui.png" width="500" alt="Backend service UI" /></a>
 </p>
 
 2. Demo
 
-Use this [link](https://youtu.be/7nuuTnahrHw) to view the backend service demo.
+Use this [link](https://youtu.be/7nuuTnahrHw) to view the REST API service demo.
+
+## Deployment
+
+The service is not deployed yet. However, you can utilize the deployed Postgres database in AWS RDS using the credentials provided in the [.env.example](https://github.com/silasjimmy/health-information-system/blob/development/backend/.env.example) file.

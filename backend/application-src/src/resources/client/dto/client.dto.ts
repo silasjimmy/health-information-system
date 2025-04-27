@@ -76,3 +76,13 @@ export class UpdateClientDto {
   @IsOptional()
   gender: Gender;
 }
+
+/**
+ * Defines the clients filter by name payload
+ */
+export class FindClientsByNameDto {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+}

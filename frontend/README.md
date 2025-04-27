@@ -18,8 +18,10 @@ The frontend application is developed using [Vue](https://vuejs.org/) in [Vite](
 2. Add the following environment variable:
 
 ```sh
-VITE_API_ENDPOINT=<your api endpoint depending on the port set for the backend service>, e.g http://localhost:3000
+VITE_API_ENDPOINT=http://localhost:3000
 ```
+
+> Change the port number depending on the `APP_PORT` number set in the backend .env file, default is 3000
 
 3. Install dependencies
 
@@ -40,11 +42,11 @@ npm run dev
 1. Images
 
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://github.com/silasjimmy/health-information-system/blob/development/frontend/frontend-app-running.png" width="300" alt="Web app start" /></a>
+  <a href="https://github.com/silasjimmy/health-information-system/blob/development/frontend/frontend-app-running.png" target="blank"><img src="https://github.com/silasjimmy/health-information-system/blob/development/frontend/frontend-app-running.png" width="500" alt="Web app start" /></a>
 </p>
 
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://github.com/silasjimmy/health-information-system/blob/development/frontend/frontend-web-app.png" width="300" alt="Web app view" /></a>
+  <a href="https://github.com/silasjimmy/health-information-system/blob/development/frontend/frontend-web-app.png" target="blank"><img src="https://github.com/silasjimmy/health-information-system/blob/development/frontend/frontend-web-app.png" width="500" alt="Web app view" /></a>
 </p>
 
 2. Demo

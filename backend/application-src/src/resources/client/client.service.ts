@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CreateClientDto, UpdateClientDto } from './dto/client.dto';
+import {
+  CreateClientDto,
+  FindClientsByNameDto,
+  UpdateClientDto,
+} from './dto/client.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Client } from './entities/client.entity';
-import { Repository, UpdateResult } from 'typeorm';
+import { ILike, Repository, UpdateResult } from 'typeorm';
 
 @Injectable()
 export class ClientService {
@@ -36,6 +40,26 @@ export class ClientService {
    */
   findOneById(id: number): Promise<Client | null> {
     return this.clientRepository.findOneBy({ id });
+  }
+
+  /**
+   * Retrieves all client records that contain the provided name in either the first
+   * or last names
+   * @param name name used to search for
+   * @returns A resolved promise containing the list of retrieved clients,
+   * empty if none found
+   */
+  findAllByName(findClientsByNameDto: FindClientsByNameDto) {
+    return this.clientRepository.find({
+      where: [
+        {
+          firstName: ILike(`%${findClientsByNameDto.name}%`),
+        },
+        {
+          lastName: ILike(`%${findClientsByNameDto.name}%`),
+        },
+      ],
+    });
   }
 
   /**
