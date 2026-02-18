@@ -24,7 +24,17 @@
       <template v-else-if="column.key === 'action'">
         <div>
           <a-tooltip placement="top" title="Edit program details">
-            <a-button shape="circle" type="text" size="large">
+            <a-button
+              shape="circle"
+              type="text"
+              size="large"
+              @click="
+                $router.push({
+                  name: 'edit-program',
+                  params: { id: record.id },
+                })
+              "
+            >
               <EditOutlined />
             </a-button>
           </a-tooltip>
@@ -37,7 +47,7 @@
     :open="openAddProgramFormModal"
     :loading="addProgramFormLoading"
     @ok="saveNewProgram"
-    @cancel="closeAddProgramFormModal"
+    @cancel="openAddProgramFormModal = false"
   ></add-program-form>
 </template>
 
@@ -50,6 +60,7 @@ import { storeToRefs } from "pinia";
 
 const openAddProgramFormModal = ref<boolean>(false);
 const addProgramFormLoading = ref<boolean>(false);
+
 const tableLoading = ref(false);
 const programStore = useProgramStore();
 const { programs } = storeToRefs(programStore);
@@ -70,6 +81,7 @@ const columns = [
   },
 ];
 
+// Retrieves the list of all programs on component mount
 onMounted(async () => {
   tableLoading.value = true;
 
@@ -88,13 +100,6 @@ async function saveNewProgram(data: any) {
   await programStore.addProgram(data);
 
   addProgramFormLoading.value = false;
-  openAddProgramFormModal.value = false;
-}
-
-/**
- * Closes the form modal
- */
-function closeAddProgramFormModal() {
   openAddProgramFormModal.value = false;
 }
 </script>

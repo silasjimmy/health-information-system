@@ -7,3 +7,12 @@ export interface ActionResponse {
   message: string;
   data?: any;
 }
+
+/**
+ * Defines the `EditProgramForm` component props
+ */
+export interface EditProgramFormProps {
+  open: boolean;
+  loading: boolean;
+  program: any;
+}

@@ -45,6 +45,16 @@ const router = createRouter({
           },
         },
         {
+          path: "/programs/program/:id",
+          name: "edit-program",
+          component: () => import("../views/EditProgramView.vue"),
+          props: true,
+          meta: {
+            pageTitle: "Edit Program",
+            requiresAuth: true,
+          },
+        },
+        {
           path: "/profile",
           name: "profile",
           component: () => import("../views/ProfileView.vue"),

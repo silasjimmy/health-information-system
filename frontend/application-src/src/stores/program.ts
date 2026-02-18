@@ -69,5 +69,10 @@ export const useProgramStore = defineStore("program", () => {
     }
   }
 
-  return { programs, getPrograms, addProgram };
+  function getProgram(id: number) {
+    return programs.value.find((program: any) => program.id === id);
+  }
+
+
+  return { programs, getPrograms, addProgram, getProgram };
 });
