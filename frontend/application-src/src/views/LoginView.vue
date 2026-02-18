@@ -104,7 +104,9 @@ function signIn() {
           router.replace({ name: "clients" });
         })
         .catch((error) => {
-          message.error("Incorrect email or password!")
+          console.log(error);
+          
+          message.error(error.response?.data?.message || "Incorrect email or password!")
         })
         .finally(() => (loginBtnLoading.value = false));
     })

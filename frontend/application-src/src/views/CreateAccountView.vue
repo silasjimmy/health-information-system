@@ -107,7 +107,7 @@ function signUp() {
         .catch((error) => {
           console.log(error);
           
-          message.error("Incorrect email or password!")
+          message.error(error.response?.data?.message || "An error occurred while creating your account. Please try again.");
         })
         .finally(() => (createAccountBtnLoading.value = false));
     })

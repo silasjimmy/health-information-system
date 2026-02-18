@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
 
@@ -15,7 +15,7 @@ export const useClientStore = defineStore("client", () => {
       filteredClients.value = clients.value.filter(
         (client: any) =>
           client.firstName.toLowerCase() === name ||
-          client.lastName.toLowerCase() === name
+          client.lastName.toLowerCase() === name,
       );
   }
 
