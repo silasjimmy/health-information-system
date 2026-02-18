@@ -9,6 +9,7 @@ import {
   UseGuards,
   Get,
   Req,
+  Version,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto, SignUpDto, UpdateProfileDto } from './dto/auth.dto';
@@ -28,6 +29,7 @@ export class AuthController {
     private readonly userService: UserService,
   ) {}
 
+  @Version('1')
   @Post('sign-up')
   @ApiBody({
     description: 'Create new user payload',
@@ -90,6 +92,7 @@ export class AuthController {
     }
   }
 
+  @Version('1')
   @Post('sign-in')
   @ApiBody({
     description: 'Log in user payload',
@@ -177,6 +180,7 @@ export class AuthController {
     }
   }
 
+  @Version('1')
   @UseGuards(AuthGuard)
   @Get('/profile')
   @ApiResponse({
@@ -207,6 +211,7 @@ export class AuthController {
     }
   }
 
+  @Version('1')
   @UseGuards(AuthGuard)
   @Patch('profile/:id')
   @ApiResponse({
@@ -217,7 +222,7 @@ export class AuthController {
     description: 'Internal server error',
     status: 500,
   })
-  async updateProfile(
+  async updateProfileV1(
     @Param('id') id: number,
     @Body() payload: UpdateProfileDto,
   ) {

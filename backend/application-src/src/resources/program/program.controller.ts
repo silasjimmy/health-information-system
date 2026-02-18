@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Version,
 } from '@nestjs/common';
 import { ProgramService } from './program.service';
 import { CreateProgramDto, UpdateProgramDto } from './dto/program.dto';
@@ -20,6 +21,7 @@ import { AuthGuard } from 'src/guards/auth.guard';
 export class ProgramController {
   constructor(private readonly programService: ProgramService) {}
 
+  @Version('1')
   @UseGuards(AuthGuard)
   @Post('program')
   @ApiBody({
@@ -54,6 +56,7 @@ export class ProgramController {
     }
   }
 
+  @Version('1')
   @UseGuards(AuthGuard)
   @Get('all')
   @ApiResponse({
@@ -82,6 +85,7 @@ export class ProgramController {
     }
   }
 
+  @Version('1')
   @UseGuards(AuthGuard)
   @Get('program/:id')
   @ApiResponse({
@@ -112,6 +116,7 @@ export class ProgramController {
     }
   }
 
+  @Version('1')
   @UseGuards(AuthGuard)
   @Patch('program/:id')
   @ApiResponse({
@@ -143,6 +148,7 @@ export class ProgramController {
     }
   }
 
+  @Version('1')
   @UseGuards(AuthGuard)
   @Delete('program/:id')
   @ApiResponse({

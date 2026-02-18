@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
@@ -9,13 +9,19 @@ async function bootstrap() {
   // Validate all endpoints using dtos
   app.useGlobalPipes(new ValidationPipe());
 
+  // Enable versioning
+  app.enableVersioning({
+    type: VersioningType.URI,
+    // defaultVersion: '1',
+  });
+
   // Configure bootstrap logger
   const logger = new Logger('bootstrap');
 
   // Bootstrap NestJS Swagger module
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('CEMA HMS API')
-    .setDescription('CEMA health system REST API documentation')
+    .setTitle('HMS API')
+    .setDescription('Health Management System REST API documentation')
     .addBearerAuth()
     .build();
   const documentFactory = () =>

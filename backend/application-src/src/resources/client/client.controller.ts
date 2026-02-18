@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Version,
 } from '@nestjs/common';
 import { ClientService } from './client.service';
 import {
@@ -31,6 +32,7 @@ export class ClientController {
     private readonly clientProgramService: ClientProgramService,
   ) {}
 
+  @Version('1')
   @UseGuards(AuthGuard)
   @ApiBody({
     description: 'Filter clients by name payload',
@@ -63,6 +65,7 @@ export class ClientController {
     }
   }
 
+  @Version('1')
   @UseGuards(AuthGuard)
   @Post('client')
   @ApiBody({
@@ -115,6 +118,7 @@ export class ClientController {
     }
   }
 
+  @Version('1')
   @UseGuards(AuthGuard)
   @Get('all')
   @ApiResponse({
@@ -143,6 +147,8 @@ export class ClientController {
     }
   }
 
+  @Version('1')
+  @UseGuards(AuthGuard)
   @Get('client/:id')
   @ApiResponse({
     description: 'Client retrieved successfully',
@@ -172,6 +178,7 @@ export class ClientController {
     }
   }
 
+  @Version('1')
   @UseGuards(AuthGuard)
   @Patch('client/:id')
   @ApiResponse({
@@ -203,6 +210,7 @@ export class ClientController {
     }
   }
 
+  @Version('1')
   @UseGuards(AuthGuard)
   @Delete('client/:id')
   @ApiResponse({
