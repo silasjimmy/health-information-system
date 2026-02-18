@@ -1,12 +1,27 @@
-# Health system backend application
+# Health Management System REST API
 
-The backend application is developed using [NestJS](https://nestjs.com/) with [TypeORM](https://typeorm.io/). The application exposes a REST API endpoint for consumption by external applications.
+The REST API is developed using [NestJS](https://nestjs.com/) with [TypeORM](https://typeorm.io/). The application exposes several endpoints for consumption by an external application.
 
-## Features
+## Tools
 
 - [Typescript](https://www.typescriptlang.org/) for logic implementation
 - [PostgresSQL](https://www.postgresql.org/) database for storing and managing information
-- [Swagger](https://docs.nestjs.com/openapi/introduction) for API documentation
+
+## Features
+
+### Security
+
+- Authentication
+- Authorization
+- Encryption & Hashing
+- CORS
+- Rate Limiting
+
+### Others
+
+- Interactive documentation using [Swagger](https://docs.nestjs.com/openapi/introduction)
+- Data validation using Data Transfer Objects (DTOs)
+- Versioning
 
 ## Setup
 
@@ -46,7 +61,11 @@ npm run start:dev
 
 5. From the logs, click the Swagger API [url](http://localhost:3000/api#/) to view and test the provided endpoints
 
-## Prototype
+6. The current API version is [v1](http://localhost:3000/v1)
+
+
+
+<!-- ## Prototype
 
 1. Images
 
@@ -60,7 +79,7 @@ npm run start:dev
 
 2. Demo
 
-Use this [link](https://youtu.be/7nuuTnahrHw) to view the REST API service demo.
+Use this [link](https://youtu.be/7nuuTnahrHw) to view the REST API service demo. -->
 
 ## Deployment
 
