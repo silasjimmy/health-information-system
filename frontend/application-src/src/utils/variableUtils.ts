@@ -19,3 +19,9 @@ export const addClientURI = `${apiEndpoint}/clients/client`;
 
 // Get client endpoint URI
 export const getClientByURI = `${apiEndpoint}/clients/client`;
+
+// Get programs endpoint URI
+export const getProgramsURI = `${apiEndpoint}/programs/all`;
+
+// Add program endpoint URI
+export const addProgramURI = `${apiEndpoint}/programs/program`;
