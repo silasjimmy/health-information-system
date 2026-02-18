@@ -11,9 +11,11 @@ import {
 } from '@nestjs/common';
 import { ProgramService } from './program.service';
 import { CreateProgramDto, UpdateProgramDto } from './dto/program.dto';
-import { ErrorResult, SuccessResult } from 'src/utils/common.util';
+import { ErrorResult, SuccessResult, UserRole } from 'src/utils/common.util';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { Roles } from 'src/decorators/roles.decorator';
+import { RolesGuard } from 'src/guards/roles.guard';
 
 @ApiTags('program')
 @ApiBearerAuth()
@@ -149,7 +151,8 @@ export class ProgramController {
   }
 
   @Version('1')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(UserRole.DOCTOR)
   @Delete('program/:id')
   @ApiResponse({
     description: 'Program deleted successfully',

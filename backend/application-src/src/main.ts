@@ -22,6 +22,7 @@ async function bootstrap() {
   const swaggerConfig = new DocumentBuilder()
     .setTitle('HMS API')
     .setDescription('Health Management System REST API documentation')
+    .setVersion('1.0')
     .addBearerAuth()
     .build();
   const documentFactory = () =>

@@ -10,6 +10,8 @@ import { ClientProgram } from '../client-program/client.program.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { JwtConfigService } from 'src/services/jwt.service';
+import { RolesGuard } from 'src/guards/roles.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -21,6 +23,14 @@ import { JwtConfigService } from 'src/services/jwt.service';
     }),
   ],
   controllers: [ClientController],
-  providers: [ClientService, ProgramService, ClientProgramService],
+  providers: [
+    ClientService,
+    ProgramService,
+    ClientProgramService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class ClientModule {}
