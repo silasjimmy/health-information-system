@@ -242,4 +242,38 @@ export class AuthController {
       };
     }
   }
+
+  @Version('2')
+  @UseGuards(AuthGuard)
+  @Patch('profile')
+  @ApiResponse({
+    description: "Updates the current user's profile.",
+    status: 200,
+  })
+  @ApiResponse({
+    description: 'Internal server error',
+    status: 500,
+  })
+  async updateProfileV2(
+    @Req() request: Request,
+    @Body() payload: UpdateProfileDto,
+  ) {
+    try {
+      const userRequest = request['user'];
+
+      const res = await this.authService.updateProfile(userRequest.id, payload);
+
+      return {
+        statusCode: 200,
+        message: 'User profile updated successfully',
+        data: res.affected,
+      };
+    } catch (error) {
+      return {
+        statusCode: 500,
+        message: 'Internal server error',
+        error: error,
+      };
+    }
+  }
 }
