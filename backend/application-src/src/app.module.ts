@@ -6,6 +6,7 @@ import { ProgramModule } from './resources/program/program.module';
 import { AuthModule } from './resources/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './services/typeorm.service';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -13,6 +14,14 @@ import { TypeOrmConfigService } from './services/typeorm.service';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useClass: TypeOrmConfigService,
+    }),
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60000,
+          limit: 10, // Limit to 10 requests per minute per IP address
+        },
+      ],
     }),
     AuthModule,
     UserModule,
