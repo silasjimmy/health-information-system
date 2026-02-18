@@ -10,3 +10,12 @@ const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 
 // User profile endpoint URI
 export const userProfileURI = `${apiEndpoint}/auth/profile`;
+
+// Get clients endpoint URI
+export const getClientsURI = `${apiEndpoint}/clients/all`;
+
+// Add client endpoint URI
+export const addClientURI = `${apiEndpoint}/clients/client`;
+
+// Get client endpoint URI
+export const getClientByURI = `${apiEndpoint}/clients/client`;

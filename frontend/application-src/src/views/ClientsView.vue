@@ -1,11 +1,10 @@
 <template>
   <div class="actions-wrapper">
     <a-flex justify="space-between">
-      <a-input-search
-        enter-button
+      <a-input
         style="width: 350px"
         placeholder="Search client's name..."
-        @search="searchClient"
+        @change="searchClient"
       />
 
       <a-button type="primary" @click="openAddClientFormModal = true">
@@ -102,13 +101,13 @@ onMounted(async () => {
 });
 
 /**
- * Searches for a client with the provided name
- * @param name client's name
+ * Searches for a client with the provided name.
+ * @param {object} ev input event object
  */
-async function searchClient(name: string) {
+function searchClient(ev: any) {
   tableLoading.value = true;
 
-  await clientStore.searchClientsByName(name.toLowerCase());
+  clientStore.searchClientsByName(ev.target.value);
 
   tableLoading.value = false;
 }

@@ -32,6 +32,7 @@
 
 <script setup lang="ts">
 import { useClientStore } from "@/stores/client";
+import { message } from "ant-design-vue";
 import { computed, onMounted, ref } from "vue";
 
 const props = defineProps(["id"]);
@@ -39,7 +40,10 @@ const clientStore = useClientStore();
 const profile = ref();
 
 onMounted(async () => {
-  profile.value = await clientStore.getClient(props.id);
+  const res = await clientStore.getClient(props.id);
+
+  if (res.success) profile.value = res.data
+  else message.error(res.message)
 });
 
 const programsDisplay = computed(() => {
